@@ -1,8 +1,8 @@
 FROM jboss/keycloak:latest
-LABEL maintainer "VSHN AG (https://vshn.ch)"
+LABEL maintainer "APPUiO (https://www.appuio.ch/)"
 
 ENV JTDS_VERSION 1.3.1
-ENV JTDS_URL http://central.maven.org/maven2/net/sourceforge/jtds/jtds/${JTDS_VERSION}/jtds-${JTDS_VERSION}.jar
+ENV JTDS_URL https://repo1.maven.org/maven2/net/sourceforge/jtds/jtds/${JTDS_VERSION}/jtds-${JTDS_VERSION}.jar
 
 COPY changeDatabase.xsl /opt/jboss/keycloak/
 COPY module.xml /opt/jboss/keycloak/modules/system/layers/base/net/sourceforge/jtds/main/
@@ -24,7 +24,7 @@ RUN set -x && \
     -xsl:/opt/jboss/keycloak/changeDatabase.xsl \
     -o:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml && \
   rm /opt/jboss/keycloak/changeDatabase.xsl && \
-  chown -R jboss:0 $JBOSS_HOME/standalone && \
-  chmod -R g+rw $JBOSS_HOME/standalone
+  chown -R jboss:0 "${JBOSS_HOME}/standalone" && \
+  chmod -R g+rw "${JBOSS_HOME}/standalone"
 
 USER jboss
