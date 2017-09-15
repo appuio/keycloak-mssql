@@ -31,6 +31,14 @@ RUN set -x && \
     -s:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml \
     -xsl:/opt/jboss/keycloak/changeProxy.xsl \
     -o:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml && \
+  java -jar /usr/share/java/saxon.jar \
+    -s:/opt/jboss/keycloak/standalone/configuration/standalone.xml \
+    -xsl:/opt/jboss/keycloak/removeHeaders.xsl \
+    -o:/opt/jboss/keycloak/standalone/configuration/standalone.xml && \
+  java -jar /usr/share/java/saxon.jar \
+    -s:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml \
+    -xsl:/opt/jboss/keycloak/removeHeaders.xsl \
+    -o:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml && \
   rm /opt/jboss/keycloak/*.xsl && \
   chown -R jboss:0 "${JBOSS_HOME}/standalone" && \
   chmod -R g+rw "${JBOSS_HOME}/standalone"
